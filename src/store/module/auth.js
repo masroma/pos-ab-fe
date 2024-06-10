@@ -15,6 +15,8 @@ const auth = {
         //state user, pakai localStorage, untuk menyimpan data user yang sedang login
         user: JSON.parse(localStorage.getItem('user')) || {},
 
+        permission: localStorage.getItem('permission') || {},
+
 
 
 
@@ -24,14 +26,19 @@ const auth = {
     mutations: {
 
         //update state token dan state user dari hasil response
-        AUTH_SUCCESS(state, token, user) {
+        AUTH_SUCCESS(state, token, user, permission) {
             state.token = token // <-- assign state token dengan response token
             state.user = user // <-- assign state user dengan response data user
+            state.permission = permission
         },
 
         //update state user dari hasil response register / login
         GET_USER(state, user) {
             state.user = user // <-- assign state user dengan response data user
+        },
+
+        GET_PERMISSION(state, permission) {
+            state.permission = permission
         },
 
 
@@ -63,7 +70,7 @@ const auth = {
                 //set axios header dengan type Authorization + Bearer token
                 Api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-                Api.post('/updateprofile', formData)
+                Api.post('/admin/updateprofile', formData)
 
                     .then(response => {
 
@@ -93,7 +100,7 @@ const auth = {
                 //set axios header dengan type Authorization + Bearer token
                 Api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-                Api.post('/updatepassword', formData)
+                Api.post('/admin/updatepassword', formData)
 
                     .then(response => {
 
@@ -220,21 +227,25 @@ const auth = {
                         //define variable dengan isi hasil response dari server
                         const token = response.data.token
                         const user = response.data.user
+                        const permission = response.data.permission
 
 
                         //set localStorage untuk menyimpan token dan data user
                         localStorage.setItem('token', token)
                         localStorage.setItem('user', JSON.stringify(user))
+                        localStorage.setItem('permission', permission)
 
 
                         //set default header axios dengan token
                         Api.defaults.headers.common['Authorization'] = "Bearer " + token
 
                         //commit auth success ke mutation
-                        commit('AUTH_SUCCESS', token, user)
+                        commit('AUTH_SUCCESS', token, user, permission)
 
                         //commit get user ke mutation
                         commit('GET_USER', user)
+
+                        commit('GET_PERMISSION', permission)
 
 
 
@@ -270,8 +281,8 @@ const auth = {
             return state.user // <-- return dengan data user
         },
 
-        currentRoles(state) {
-            return state.roles // <-- return dengan data user
+        currentPermissions(state) {
+            return state.permission // <-- return dengan data user
         },
 
         //loggedIn

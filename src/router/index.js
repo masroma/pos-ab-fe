@@ -26,6 +26,57 @@ const routes = [
         }
     },
 
+    {
+        path: '/admin/setting',
+        name: 'setting',
+        component: () => import( /* webpackChunkName: "login" */ '../views/admin/Setting.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: '/admin/profile',
+        name: 'profile',
+        component: () => import( /* webpackChunkName: "login" */ '../views/admin/Profile.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: '/admin/password',
+        name: 'password',
+        component: () => import( /* webpackChunkName: "login" */ '../views/admin/Password.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: '/admin/permission',
+        name: 'permission',
+        component: () => import( /* webpackChunkName: "login" */ '../views/admin/Permission.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true,
+            permission: 'permissions.index'
+        }
+    },
+
+    {
+        path: '/admin/forbidden',
+        name: 'frobidden',
+        component: () => import( /* webpackChunkName: "login" */ '../views/admin/Forbidden.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
+
 
 
 ]

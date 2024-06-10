@@ -17,6 +17,8 @@ import './style.css';
  */
 import mixins from './mixins';
 
+import '../node_modules/flowbite-vue/dist/index.css'
+
 /**
  * Vue Router
  */
